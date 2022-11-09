@@ -3,38 +3,45 @@ const searchBar = document.querySelector("#searchBar");
 
 let countries;
 
-searchBar.addEventListener("keyup", (e) => {
-  const searchString = e.target.value.toLowerCase();
+searchBar.addEventListener("keyup", () => {
+  const searchStr = searchBar.value.toLowerCase();
 
-  const filteredCountries = countries.filter((country) => {
-    return country.name.common.toLowerCase().includes(searchString);
-  });
+  const filteredCountry = countries
+    .filter((c) => !!c.capital)
+    .filter((country) => {
+      return country.name.common.toLowerCase().includes(searchStr) || country.capital[0].toLowerCase().includes(searchStr);
+    });
 
-  displayCountries(filteredCountries);
+  displayCountries(filteredCountry);
 });
 
 async function loadCountries() {
   const response = await fetch("https://restcountries.com/v3.1/all");
   countries = await response.json();
-  console.log(countries);
   displayCountries(countries);
 }
 
 function displayCountries(countries) {
-  const displayHtml = countries
+  const printHtml = countries
+    .sort((countryA, countryB) => countryA.name.common - countryB.name.common)
     .map((country) => {
+      if (country.capital === undefined) {
+        country.capital = "N/A";
+      }
       return `
-      <div class="countries-contents">
-        <h1 class="country-name">${country.name.common}</h1>
-        <p class="country-capital">Capital: ${country.capital}</p>
-        <img src="${country.flags.svg}" class="country-flag" alt="" />
-      </div>
-      `;
+        <div class="country-contents">
+          <div class="country-flag">
+            <img src="${country.flags.png}"   alt="">
+          </div>
+          <div class="country-desc">
+            <h1>${country.name.common}</h1>
+            <p>Capital: ${country.capital}</p>
+          </div>
+        </div>`;
     })
-    .sort()
     .join("");
 
-  countryList.innerHTML = displayHtml;
+  countryList.innerHTML = printHtml;
 }
 
 loadCountries();

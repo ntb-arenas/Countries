@@ -1,18 +1,30 @@
 * {
   box-sizing: border-box;
-  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 .countries-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-gap: 20px;
+  padding: 0 20px;
+  margin-top: 20px;
 }
 
-.countries-contents {
-  text-align: center;
+.country-contents {
+  display: flex;
 }
 
 .country-flag {
+  margin: auto 0;
+}
+
+.country-flag img {
+  display: flex;
   max-width: 150px;
+}
+
+.country-desc {
+  padding-left: 10px;
 }
