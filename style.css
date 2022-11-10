@@ -32,3 +32,52 @@ button {
 .country-desc {
   padding-left: 10px;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background: #f3f3f3;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  background-color: #eee;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.pagenumbers button {
+  text-align: center;
+  width: 25px;
+  height: 25px;
+
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  background-color: #44aaee;
+
+  margin: 5px;
+  transition: 0.4s;
+
+  color: #fff;
+  font-size: 18px;
+  text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
+
+.pagenumbers button:hover {
+  background-color: #44eeaa;
+}
+
+.pagenumbers button.active {
+  background-color: #44eeaa;
+  box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
