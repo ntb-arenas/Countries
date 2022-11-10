@@ -6,43 +6,56 @@ let countryItems = new Array();
 let countries;
 let sortOrder = 1;
 
-let isKeyPressed;
+let isCurrentPage;
 
 searchBar.addEventListener("keyup", () => {
   //Get user input every keypress and filter countries if user input is included or exists in country.name and country.capital.
   const searchStr = searchBar.value.toLowerCase();
 
-  const filteredCountry = countries
-    .filter((c) => !!c.capital)
-    .filter((country) => {
-      return country.name.common.toLowerCase().includes(searchStr) || country.capital[0].toLowerCase().includes(searchStr);
-    });
+  const filteredCountry = countries.filter((country) => {
+    return country.name.common.toLowerCase().includes(searchStr) || country.capital[0].toLowerCase().includes(searchStr);
+  });
 
   //Reset countryItems array. If not reseted, then calling displayCountries(countries) function will push a new array to countryItems variable and duplicate.
   countryItems = new Array();
-  isKeyPressed = true;
+  isCurrentPage = true;
 
   // Call functions to display filtered array.
   displayCountries(filteredCountry);
 });
 
+function filterCountryByCont() {
+  let selectedOpt = document.querySelector(".sort-by-continent").value;
+
+  const filteredCountryByCont = countries.filter((country) => {
+    return selectedOpt === "world" ? country.continents[0] : country.continents[0].toLowerCase().includes(selectedOpt);
+  });
+
+  //Reset countryItems array. If not reseted, then calling displayCountries(countries) function will push a new array to countryItems variable and duplicate.
+  countryItems = new Array();
+  isCurrentPage = true;
+
+  // Call functions to display filtered array.
+  displayCountries(filteredCountryByCont);
+}
+
 function sortCountry() {
   // get select value.
-  let selectedOpt = document.querySelector("select").value;
+  let selectedOpt = document.querySelector(".sort-countries").value;
 
   if (selectedOpt === "alphabetical") {
     sortOrder = 1;
   } else if (selectedOpt === "sortUp") {
     sortOrder = 2;
-  } else {
+  } else if (selectedOpt === "sortDown") {
     sortOrder = 3;
   }
 
   //Reset Array. If not reseted, then calling displayCountries(countries) function will push a new array to countryItems variable and duplicate.
   countryItems = new Array();
-
   // Call functions to display new array order.
   displayCountries(countries);
+  filterCountryByCont();
 }
 
 async function loadCountries() {
@@ -51,7 +64,7 @@ async function loadCountries() {
   countries = await response.json();
 
   // Call functions to display array.
-  displayCountries(countries);
+  filterCountryByCont();
 }
 
 function displayCountries(countries) {
@@ -66,7 +79,7 @@ function displayCountries(countries) {
       } else if (sortOrder === 2) {
         // If sortOrder === Crescending order.
         return b.population - a.population;
-      } else {
+      } else if (sortOrder === 3) {
         // If sortOrder === Descending order.
         return a.population - b.population;
       }
@@ -135,11 +148,11 @@ function pagination() {
     let start = rowsPerPage * page;
     let end = start + rowsPerPage;
 
-    if (isKeyPressed) {
+    if (isCurrentPage) {
       currentPage = 1;
       start = 0;
       end = start + rowsPerPage;
-      isKeyPressed = false;
+      isCurrentPage = false;
     }
 
     let paginatedItems = items.slice(start, end); //slice(0, 12)
@@ -158,12 +171,12 @@ function pagination() {
 
     let page_count = Math.ceil(items.length / rowsPerPage);
     for (let i = 1; i < page_count + 1; i++) {
-      let btn = PaginationButton(i, items);
+      let btn = paginationBtn(i, items);
       wrapper.appendChild(btn);
     }
   }
 
-  function PaginationButton(page, items) {
+  function paginationBtn(page, items) {
     let button = document.createElement("button");
     button.innerText = page;
 

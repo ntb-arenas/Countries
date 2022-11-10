@@ -42,10 +42,20 @@
 
       <div class="text-center" id="searchWrapper">
         <input class="px-2" type="text" name="searchBar" id="searchBar" placeholder="Country/capital" />
-        <select name="buttons-js" class="buttons-js" onchange="sortCountry()">
+        <select class="sort-countries" onchange="sortCountry()">
           <option value="alphabetical">Alphabetical</option>
           <option value="sortUp">Population High</option>
           <option value="sortDown">Population Low</option>
+        </select>
+
+        <select class="sort-by-continent" onchange="filterCountryByCont()">
+          <option value="world">World</option>
+          <option value="asia">Asia</option>
+          <option value="africa">Africa</option>
+          <option value="north america">North America</option>
+          <option value="south america">South America</option>
+          <option value="oceania">Oceania</option>
+          <option value="antarctica">Antarctica</option>
         </select>
       </div>
 
