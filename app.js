@@ -102,7 +102,7 @@ function displayCountries(countries) {
 
       return countryItems.push(`
           <div class="country-flag">
-            <img src="${country.flags.png}" alt="">
+            <img src="${country.flags.png}" loading="lazy" alt="">
           </div>
           <div class="country-desc">
             <h4>${country.name.common}</h4>
@@ -118,8 +118,7 @@ const paginationElement = document.getElementById("pagination");
 
 //Set current page we are on. Ex: Page 1.
 let currentPage = 1;
-
-//Set the amount of rows or the amount of itmes you want to display per page.
+//Set the amount of rows or the amount of times you want to display per page.
 let rows = 12;
 
 function pagination() {
@@ -168,7 +167,9 @@ function pagination() {
     let button = document.createElement("button");
     button.innerText = page;
 
-    if (currentPage == page) button.classList.add("active");
+    if (currentPage === page) {
+      button.classList.add("active");
+    }
 
     if (items.length <= 12) button.parentNode.removeChild(button);
 
@@ -180,6 +181,7 @@ function pagination() {
       current_btn.classList.remove("active");
       button.classList.add("active");
     });
+
     return button;
   }
 }
