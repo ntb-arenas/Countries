@@ -1,5 +1,6 @@
 const countryList = document.querySelector("#country-list");
 const searchBar = document.querySelector("#searchBar");
+const paginationElement = document.getElementById("pagination");
 
 let countryItems = new Array();
 
@@ -127,14 +128,12 @@ function displayCountries(countries) {
   pagination();
 }
 
-const paginationElement = document.getElementById("pagination");
-
-//Set current page we are on. Ex: Page 1.
-let currentPage = 1;
-//Set the amount of rows or the amount of times you want to display per page.
-let rows = 12;
-
 function pagination() {
+  //Set current page we are on. Ex: Page 1.
+  let currentPage = 1;
+  //Set the amount of rows or the amount of times you want to display per page.
+  let rows = 12;
+
   displayList(countryItems, countryList, rows, currentPage);
   setupPagination(countryItems, paginationElement, rows);
 
